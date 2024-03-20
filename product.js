@@ -1,11 +1,12 @@
 class Product{
-    constructor( id, name, price, description, thumbnail, code, stock){
+    constructor( id, title, price, description, thumbnail, code, stock){
         //validate if every parameter is not null
-        if(!id || !name || !price || !description || !thumbnail || !code || !stock){
-            throw new Error("All parameters are required [name, price, description, thumbnail, code, stock]");
+        console.log("Product data: ", id, title, price, description, thumbnail, code, stock);
+        if(!id || !title || !price || !description || !thumbnail || !code || !stock){
+            throw new Error("All parameters are required [id, title, price, description, thumbnail, code, stock]");
         }
         this.id = id;
-        this.title = name;
+        this.title = title;
         this.description = description;
         this.price = price;
         this.thumbnail = thumbnail;
