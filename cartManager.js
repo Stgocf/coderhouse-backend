@@ -92,7 +92,8 @@ class CartManager{
         //if cart exists, add product to cart
         if(cart){
             //search for the product with the same id
-            let product = ProductManager.getProductById(productId);
+            let prodtManager = new ProductManager();
+            let product = prodtManager.getProductById(productId);
             if(product){
                 //add product to cart products array
                 let index = cart.products.findIndex(product => Number(product.id) === Number(productId));
