@@ -1,51 +1,31 @@
 // Import express
 import express from 'express';
-import ProductManager from '../productManager.js';
+import productsRouter from './routers/products.js';
+import cartsRouter from './routers/carts.js';
 
 // Import routes
 //const routes = require('./routes');
 
 //define PORT 
-const PORT = 3000;
-
+const PORT = 8080;
 // Create an express app
 const app = express();
 
+//classic configs for app
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// get on route "/"
+//use productsRouter on /api/products
+app.use('/api/products', productsRouter);
+//use cartsRouter on /api/carts
+app.use('/api/carts', cartsRouter);
+
 app.get('/', (req, res) => {
+    // send Hello World
     res.send('Hello World');
 });
 
-// get on route "/"
-app.get('/products', (req, res) => {
-    let pm = new ProductManager();
-    let products = pm.getProducts();
-    let {limit} = req.query;
-    limit = Number(limit)
-    if(limit && limit > 0){
-        //si limitt existe, filtrar productos por los primeros limit elementos
-        products = products.slice(0, limit);
-    }
-    return res.json(products);
-});
-
-app.get('/products/:pid', (req, res) => {
-    let pm = new ProductManager();
-    //verify if pid is number
-    if(isNaN(req.params.pid)){
-        return res.status(400).send("Invalid product id");
-    }
-    let product = pm.getProductById(Number(req.params.pid));
-    if(product){
-        return res.json(product);
-    }
-    else{
-        return res.status(404).send("Product not found");
-    }
-});
-
-// app lise on port 3000
+// app lise on port 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

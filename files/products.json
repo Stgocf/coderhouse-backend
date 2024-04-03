@@ -4,44 +4,49 @@
     "title": "Product 1",
     "price": 10.99,
     "description": "Description of Product 1",
-    "thumbnail": "thumbnail1.jpg",
+    "thumbnail": ["thumbnail1.jpg"],
     "code": "ABC123",
-    "stock": 100
+    "stock": 100,
+    "category": "category1"
   },
   {
     "id": 2,
     "title": "Product 2",
     "price": 20.99,
     "description": "Description of Product 2",
-    "thumbnail": "thumbnail2.jpg",
+    "thumbnail": ["thumbnail2.jpg"],
     "code": "DEF456",
-    "stock": 150
+    "stock": 150,
+    "category": "category2"
   },
   {
     "id": 3,
     "title": "Product 3",
     "price": 30.99,
     "description": "Description of Product 3",
-    "thumbnail": "thumbnail3.jpg",
+    "thumbnail": ["thumbnail3.jpg"],
     "code": "GHI789",
-    "stock": 200
+    "stock": 200,
+    "category": "category3"
   },
   {
     "id": 4,
     "title": "Product 4",
     "price": 40.99,
     "description": "Description of Product 4",
-    "thumbnail": "thumbnail4.jpg",
+    "thumbnail": ["thumbnail4.jpg"],
     "code": "JKL012",
-    "stock": 250
+    "stock": 250,
+    "category": "category4"
   },
   {
     "id": 5,
     "title": "Product 5",
     "price": 50.99,
     "description": "Description of Product 5",
-    "thumbnail": "thumbnail5.jpg",
+    "thumbnail": ["thumbnail5.jpg"],
     "code": "MNO345",
-    "stock": 300
+    "stock": 300,
+    "category": "category5"
   }
 ]

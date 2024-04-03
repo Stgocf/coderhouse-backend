@@ -17,7 +17,9 @@ class ProductManager{
                 let jsonProducts = fs.readFileSync(this.path , 'utf-8');
                 jsonProducts = JSON.parse(jsonProducts);
                 //create products from json usin mps
-                let productsArray = jsonProducts.map(product => new Product(product.id, product.title, product.price, product.description, product.thumbnail, product.code, product.stock));
+                let productsArray = jsonProducts.map(product => new Product(product.id, product.title, product.price, 
+                                                                    product.description, product.thumbnails, product.code, 
+                                                                    product.stock, product.category));
                 //set productId to the max id in productsArray
                 let maxId = Math.max(...productsArray.map(product => product.id));
                 ProductManager.productId = maxId + 1;
@@ -48,7 +50,7 @@ class ProductManager{
         }
     }
 
-    addProduct(name, price, description, thumbnail, code, stock){
+    addProduct(title, price, description, thumbnails=[], code, stock, category){
         //seacrh for product with same code
         let prod = this.getProductByCode(code);
         if(prod){
@@ -57,7 +59,7 @@ class ProductManager{
         //create new product
         
         try{
-            let newProduct = new Product(ProductManager.productId, name, price, description, thumbnail, code, stock);
+            let newProduct = new Product(ProductManager.productId, title, price, description, thumbnails, code, stock, category);
             this.products.push(newProduct);
             this.writeProducts();
             ProductManager.productId++;
@@ -70,7 +72,7 @@ class ProductManager{
         return this.products;
     }
     getProductById(productId){
-        let prod = this.products.find(product => product.id === productId);
+        let prod = this.products.find(product => Number(product.id) === Number(productId));
         if(prod){
             return prod;
         }
