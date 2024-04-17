@@ -4,11 +4,19 @@ import fs from 'fs';
 class ProductManager{
     static productId = 1;
 
+    //singleton patter
+    static #instance;
+
     constructor(){
+        if(ProductManager.#instance){
+            return ProductManager.#instance;
+        }
         this.path = './files/products.json';
         this.products = this.readProducts();
+        ProductManager.#instance = this;
     }
-    
+
+
     //read products in file products.json
     readProducts(){
         try{
@@ -51,9 +59,11 @@ class ProductManager{
     }
 
     addProduct(title, price, description, thumbnails=[], code, stock, category){
+        console.log("addProduct function");
         //seacrh for product with same code
         let prod = this.getProductByCode(code);
         if(prod){
+            console.log("Product code already exists");
             return "Product code already exists";
         }
         //create new product
@@ -65,6 +75,7 @@ class ProductManager{
             ProductManager.productId++;
         }
         catch(e){
+            console.log(e)
             return e.message;
         }
     }

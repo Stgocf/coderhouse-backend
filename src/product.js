@@ -3,6 +3,7 @@ class Product{
         //validate if every parameter is not null
         console.log("Product data: ", id, title, price, description, thumbnails, code, stock, category, status);
         if(!id || !title || !price || !description || !code || !stock || !category || !status){
+            console.log("All parameters are required [id, title, price, description, code, stock, category, status]");
             throw new Error("All parameters are required [id, title, price, description, code, stock, category, status]");
         }
         this.id = id;

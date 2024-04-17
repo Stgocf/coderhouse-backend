@@ -53,5 +53,38 @@
     "stock": 300,
     "category": "category5",
     "status": true
+  },
+  {
+    "id": 6,
+    "title": "1",
+    "description": "1",
+    "price": "1",
+    "thumbnails": [],
+    "code": "1",
+    "stock": "1",
+    "category": "1",
+    "status": true
+  },
+  {
+    "id": 7,
+    "title": "2",
+    "description": "2",
+    "price": "2",
+    "thumbnails": [],
+    "code": "2",
+    "stock": "2",
+    "category": "2",
+    "status": true
+  },
+  {
+    "id": 8,
+    "title": "3",
+    "description": "3",
+    "price": "3",
+    "thumbnails": [],
+    "code": "3",
+    "stock": "3",
+    "category": "3",
+    "status": true
   }
 ]

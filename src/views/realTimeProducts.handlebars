@@ -1,0 +1,37 @@
+<div>
+    <h1>Real Time Products View</h1>
+    <h3>Product Table</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>description</th>
+                <th>price</th>
+                <th>thumbnails</th>
+                <th>code</th>
+                <th>stock</th>
+                <th>category</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody id="products-socket">
+            
+        </tbody>
+    </table>
+
+    <h3>Add Product Form</h3>
+    <form id="add-product-form">
+        <input type="text" name="title" placeholder="title" id="title" required>
+        <input type="text" name="description" placeholder="description" id="description" required>
+        <input type="number" name="price" placeholder="price" id="price" required>
+        <input type="text" name="code" placeholder="code" id="code" required>
+        <input type="number" name="stock" placeholder="stock" id="stock" required>
+        <input type="text" name="category" placeholder="category" id="category" required>
+        <button type="submit">Add Product</button>
+    </form>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

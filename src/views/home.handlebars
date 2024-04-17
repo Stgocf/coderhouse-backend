@@ -1,0 +1,47 @@
+<div>
+    <h1>Home View</h1>
+    <h3>Product Table</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>description</th>
+                <th>price</th>
+                <th>thumbnails</th>
+                <th>code</th>
+                <th>stock</th>
+                <th>category</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.title}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.price}}</td>
+                    <td>
+                        {{#if this.thumbnails.length}}
+                            {{#each this.thumbnails}}
+                                <img src="{{this}}" alt="thumbnail" style="width: 50px; height: 50px;">
+                            {{/each}}
+                        {{else}}
+                            {{this.thumbnails}}
+                        {{/if}}
+                    </td>
+                    <td>{{this.code}}</td>
+                    <td>{{this.stock}}</td>
+                    <td>{{this.category}}</td>
+                    <td>
+                        {{#if this.status}}
+                            <span style="color: green;">Active</span>
+                        {{else}}
+                            <span style="color: red;">Inactive</span>
+                        {{/if}}
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+</div>
