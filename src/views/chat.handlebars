@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+</head>
+<body>
+    <div>
+        <h1>Chat View</h1>
+        <div id="chat">
+            <div id="messages"></div>
+            <form id="message-form">
+                <input type="text" name="message" id="message" placeholder="Message required">
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/chat.js"></script>
+</html>

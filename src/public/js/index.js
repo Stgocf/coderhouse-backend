@@ -7,7 +7,7 @@ socket.on('products', (products) => {
     products.forEach(product => {
         const productElement = document.createElement('tr');
         productElement.innerHTML = `
-            <td>${product.id}</td>
+            <td>${product._id}</td>
             <td>${product.title}</td>
             <td>${product.description}</td>
             <td>${product.price}</td>
