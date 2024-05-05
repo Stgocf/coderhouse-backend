@@ -1,25 +1,31 @@
 const socket = io();
 
 const chat = document.getElementById('chat');
-const messages = document.getElementById('messages');
+const messagesLog = document.getElementById('messagesLog');
+const messageInput = document.getElementById('messageInput');
+const sendButton = document.getElementById('sendButton');
 let data;
 let user;
 
 renderMsgs = (msgs) => {
-    let messages = '';
+    console.log('renderMsgs function');
+    messagesLog.innerHTML = '';
+    messages = '';
     msgs.forEach(msg => {
-        messages = messages + `<div>${msg.user}: --> ${msg.message}</div>`;
+        messages = messages + `<p>${msg.user}: --> ${msg.message}</p>`;
     });
-    messages.innerHTML = messages;
+    messagesLog.innerHTML = messages;
 }
 
 socket.on('message', (msg) => {
+    console.log('recieved message event en frontend');
     data = msg;
 });
 
-socket.on('messages', (msgs) => {
+socket.on('renderMessages', (msgs) => {
+    console.log('recieved renderMessages event in the frontend');
     renderMsgs(msgs);
-    chat.scrollTop = messages.scrollIntoView(false);
+    //chat.scrollTop = messages.scrollIntoView(false);
 });
 
 //swal alert
@@ -40,18 +46,30 @@ Swal.fire({
 }).then((result) => {
     if (result.isConfirmed) {
         user = result.value;
-        renderMsgs(data);
+        //renderMsgs(data);
     }
 });
 
-chat.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter' && chat.value) {
-        console.log(user);
-        console.log(chat.value);
-        socket.emit('message', { user, message: chat.value });
-        chat.value = '';
-    }
+messageInput.addEventListener('keyup', (e) => {
+
     e.preventDefault();
+    if (messageInput.value && e.key === 'Enter') {
+        //log i console the suer and the message to see if it is working in a string like "user X send message Y"
+        console.log(user + ' send message ' + messageInput.value);
+        socket.emit('message', { user, message: messageInput.value });
+        messageInput.value = '';
+    }
+}
+);
+sendButton.addEventListener('click', (e) => {
+
+    e.preventDefault();
+    if (messageInput.value) {
+        //log i console the suer and the message to see if it is working in a string like "user X send message Y"
+        console.log(user + ' send message ' + messageInput.value);
+        socket.emit('message', { user, message: messageInput.value });
+        messageInput.value = '';
+    }
 }
 );
 

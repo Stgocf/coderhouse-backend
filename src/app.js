@@ -70,14 +70,15 @@ socketServer.on('connection', async (socket) => {
 
     //for chat operation
     const msgs = await messageModel.find();
-    socket.emit('message', msgs);
+    socket.emit('renderMessages', msgs);
 
     socket.on('message', async (msg) => {
-        console.log('recieved message event');
-        const newMsg = await messageModel.create({...msg}) ;
+        console.log('recieved message event in backend, msg: ', msg);
+        const newMsg = await messageModel.create(msg) ;
         if(newMsg){
+            console.log('new message saved ');
             const messages = await messageModel.find();
-            socketServer.emit('messages', messages);
+            socketServer.emit('renderMessages', messages);
         }
     });
 
