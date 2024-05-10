@@ -1,15 +1,18 @@
 import { Router } from "express";
-import  CartManager  from "../cartManager.js";
-import  ProductManager  from "../productManager.js";
-import { addCart, addProductToCart, getCartById } from "../controllers/carts.js";
+//import  CartManager  from "../cartManager.js";
+//import  ProductManager  from "../productManager.js";
+import { addCart, addProductToCart, getCartById, deleteProductFromCart, updateCart, updateCartProduct, deleteAllProductsFromCart} from "../controllers/carts.js";
+
 
 const cartsRouter = Router();
 
 cartsRouter.post("/", addCart );
-
 cartsRouter.get("/:cid", getCartById );
-
 cartsRouter.post("/:cid/product/:pid", addProductToCart );
+cartsRouter.delete("/:cid/products/:pid", deleteProductFromCart)
+cartsRouter.put("/:cid", updateCart)
+cartsRouter.put("/:cid/products/:pid", updateCartProduct)
+cartsRouter.delete("/:cid", deleteAllProductsFromCart)
 
 // cartsRouter.post("/", (req, res) => {
 //     //new cartManager
