@@ -6,6 +6,8 @@ import { engine } from 'express-handlebars';
 import productsRouter from './routers/products.js';
 import cartsRouter from './routers/carts.js';
 import viewsRouter from './routers/views.js';
+import cookieRouter from './routers/cookie.js';
+import sessionRouter from './routers/session.js'
 import __dirname from './utils.js';
 
 import  ProductManager  from './productManager.js';
@@ -13,6 +15,9 @@ import { dbConnection } from './database/config.js';
 
 import { productModel } from "./models/products.js";
 import { messageModel } from "./models/messages.js";
+
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 
 //create a new instance of ProductManager
 const prodM = new ProductManager();
@@ -37,12 +42,27 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');
 
+//use cookieParser
+app.use(cookieParser("password"));
+
+//use session as midleware
+app.use(session({
+    secret:"secretCoderSCF",
+    resave:true,
+    saveUninitialized:true
+}))
+
 //use productsRouter on /api/products
 app.use('/api/products', productsRouter);
 //use cartsRouter on /api/carts
 app.use('/api/carts', cartsRouter);
 //use viewsRouter on /
 app.use('/', viewsRouter);
+//use cookieRouter on /cookie
+app.use('/cookie', cookieRouter);
+//use sessionRouter on /session
+app.use('api/sessions', sessionRouter);
+
 
 await dbConnection();
 

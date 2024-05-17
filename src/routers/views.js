@@ -13,6 +13,18 @@ const viewsRouter = Router();
 //     return res.render('home', { products , styles:'styles.css'});
 // });
 
+viewsRouter.get('/', async (req, res) => {
+    return res.render('login', { styles:'styles.css'});
+});
+
+viewsRouter.get('/profile', async (req, res) => {
+    return res.render('profile', { styles:'styles.css'});
+});
+
+viewsRouter.get('/register', async (req, res) => {
+    return res.render('register', { styles:'styles.css'});
+});
+
 viewsRouter.get('/realTimeProducts', (req, res) => {
     return res.render('realTimeProducts', { styles:'styles.css'});
 });
