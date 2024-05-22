@@ -18,6 +18,8 @@ import { messageModel } from "./models/messages.js";
 
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import { dbUri } from './database/config.js';
 
 //create a new instance of ProductManager
 const prodM = new ProductManager();
@@ -47,6 +49,10 @@ app.use(cookieParser("password"));
 
 //use session as midleware
 app.use(session({
+    store: MongoStore.create({ 
+        mongoUrl: dbUri,
+        ttl: 10 * 60 // = 10 minutos. Después de 10 minutos la sesión expira
+    }),
     secret:"secretCoderSCF",
     resave:true,
     saveUninitialized:true
@@ -61,7 +67,7 @@ app.use('/', viewsRouter);
 //use cookieRouter on /cookie
 app.use('/cookie', cookieRouter);
 //use sessionRouter on /session
-app.use('api/sessions', sessionRouter);
+app.use('/api/sessions', sessionRouter);
 
 
 await dbConnection();

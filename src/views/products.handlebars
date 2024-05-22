@@ -1,5 +1,15 @@
-<div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
     <h1>Pagination of Products</h1>
+    <h2>Welcome {{user.first_name }} {{user.last_name}}! nice to see you again!</h2>
     <table>
         <thead>
             <tr>
@@ -51,3 +61,13 @@
             {{/each}}
         </tbody>
 </div>
+<div>
+    <button id="viewCart-button" disabled="true">View Cart</button>
+    <a id="searchProducts-button" href="/products"><button >Search Products</button></a>
+    <a id="profile" href="/profile"><button >Profile</button></a>
+    <button id="logout-button">Logout</button>
+</div>
+
+</body>
+<script type="module" src="/js/logout.js"></script>
+</html>

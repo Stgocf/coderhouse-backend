@@ -1,6 +1,8 @@
 import { request, response } from "express";
 import { userModel } from "../models/users.js";
 
+//const userModel = new userModel()
+
 export const counter = (req = request, res = response) => {
     if(req.session.counter){
         req.session.counter++;
@@ -21,52 +23,66 @@ export function auth(req, res, next){
     }
 }
 
-export const login = (req = request, res = response) => {
-    // //const { user, pass } = JSON.stringify(req.body);
-    // const { user, pass } = req.query;
-    // console.log(`login recieved with query ${JSON.stringify(req.query)}`)
-    // console.log(`login recieved with user ${user}`)
-    // req.session.user = user
-    // req.session.admin = true
-    // res.send('Login OK')
+export const login = async (req = request, res = response) => {
+    console.log('Login request received');
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ msg: 'Email and password are required' });
+        }
 
-    //check u UserModel if the user exists, if exists create a session object, if not it need to be redirected to de register page
-    const { email, password } = req.body;
-    userModel.findOne({email, password})
-    .then( user => {
-            if(user){
-                req.session.first_name = user.first_name
-                req.session.last_name = user.last_name
-                req.session.email = user.email
-                res.status(200).send({msg:'Login OK'})
-            }
-            else{
-                res.status(400).send({msg:'Login Error'})
-            }
-        })
-}
+        const user = await userModel.findOne({ email, password }).lean();
+        if (user) {
+            req.session.user = user;
+            console.log(`Session created for user ${req.session.user.first_name} ${req.session.user.last_name}`);
+            res.status(200).json({ msg: 'Login OK' });
+        } else {
+            res.status(400).json({ msg: 'User not found, please register!' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Error logging in' });
+    }
+};
 
-export const logout = (req = request, res = response) => {
-    req.session.destroy( err => {
-        if(!err) res.send('Logout OK')
-        else res.send({status: 'Logout Error', body: err})
-    })
+export const logout = async (req = request, res = response) => {
+    console.log('Logout request received');
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            return res.status(500).send('Failed to log out.');
+        }
+        res.redirect('/login');
+    });
 }
 
 export const privado = (req = request, res = response) => {
     res.send('si estas viendo esto es porque eres stgocf y eres admin!')
 }
 
-export const register = (req = request, res = response) => {
+export const register = async (req = request, res = response) => {
     //creates an user using userModel
-    const { first_name, last_name, email, age, password } = req.body;
-    const user = new userModel({first_name, last_name, email, age, password});
-    user.save()
-    .then( user => {
-        res.send(user)
-    })
-    .catch( err => {
-        res.status(400).send(err)
-    })
+    try{
+        const { first_name, last_name, email, age, password } = req.body;
+        console.log('Register request received');
+
+        //check  if an user with the same email has already been created
+        const userExists = await userModel.findOne({email});
+        if(userExists){
+            return res.status(400).send({ msg: 'User already exists'});
+        }
+
+        let role = 'user'
+        if (email === 'adminCoder@coder.com' && password === 'adminCod3r123'){
+            role = 'admin';
+        }
+        
+        const user = await userModel.create({first_name, last_name, email, age, password, role});
+        res.status(200).send({ msg: 'User created!'});
+    }catch (error){
+        console.error(error);
+        res.status(500).send({ msg: 'Error creating user'});
+    }
+
 
 }

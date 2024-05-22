@@ -6,9 +6,10 @@ const  nameCollection = 'users';
 const userSchema = new Schema({
             first_name: {type:String, required:[true, 'username is required'] },
             last_name: { type:String, required:[true, 'password is required']},
-            email: { type:String, required:[true, 'password is required']},
+            email: { type:String,required:[true, 'password is required'], unique: true},
             age: { type:Number, required:[true, 'age is required']},
-            password: { type:String, required:[true, 'password is required']}
+            password: { type:String, required:[true, 'password is required']},
+            role: { type:String, default: 'user'},
         
 }
 );

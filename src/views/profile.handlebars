@@ -8,13 +8,17 @@
 </head>
 <body>
     <div class="profile">
-    <h1>Welcome, {{session.user.first_name}} {{session.user.last_name}}</h1>
-    <p>Age: {{session.user.age}}</p>
-    <p>Email: {{session.user.email}}</p>
-
-    <button id="viewCart">View Cart</button>
-    <button id="searchProducts">Search Products</button>
-    <button id="logout">Logout</button>
+    <h1>Welcome, {{user.first_name}} {{user.last_name}}</h1>
+    <p>Age: {{user.age}}</p>
+    <p>Email: {{user.email}}</p>
+    <p>Role: {{user.role}}</p>
+</div>
+<div>
+    <button id="viewCart-button" disabled="true">View Cart</button>
+    <a id="searchProducts-button" href="/products"><button >Search Products</button></a>
+    <a id="profile" href="/profile"><button >Profile</button></a>
+    <button id="logout-button">Logout</button>
 </div>
 </body>
+<script type="module" src="/js/logout.js"></script>
 </html>

@@ -3,10 +3,10 @@ import { counter, login, logout, auth , privado, register} from "../controllers/
 
 const sessionRouter = Router();
 
-sessionRouter.get('/', counter)
-sessionRouter.get('/login', login);
-sessionRouter.get('/logout', logout);
-sessionRouter.get('/privado', auth, privado )
+//sessionRouter.get('/', counter)
+sessionRouter.post('/login', login);
+sessionRouter.post('/logout', logout);
+//sessionRouter.get('/privado', auth, privado )
 sessionRouter.post('/register', register)
 
 export default sessionRouter;

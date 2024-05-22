@@ -1,8 +1,9 @@
 import { Router } from "express";
-import  ProductManager  from '../productManager.js';
-import { productModel } from "../models/products.js";
+//import  ProductManager  from '../productManager.js';
+//import { productModel } from "../models/products.js";
 import { cartModel } from "../models/carts.js";
 import { getProducts } from "../controllers/products.js";
+import { auth } from "../middlewares/auth.js";
 
 const viewsRouter = Router();
 
@@ -13,15 +14,19 @@ const viewsRouter = Router();
 //     return res.render('home', { products , styles:'styles.css'});
 // });
 
-viewsRouter.get('/', async (req, res) => {
+viewsRouter.get('/', auth, async (req, res) => {
     return res.render('login', { styles:'styles.css'});
 });
 
-viewsRouter.get('/profile', async (req, res) => {
-    return res.render('profile', { styles:'styles.css'});
+viewsRouter.get('/login', auth, async (req, res) => {
+    return res.render('login', { styles:'styles.css'});
 });
 
-viewsRouter.get('/register', async (req, res) => {
+viewsRouter.get('/profile', auth, async (req, res) => {
+    return res.render('profile', { user: req.session.user, styles:'styles.css'});
+});
+
+viewsRouter.get('/register', auth, async (req, res) => {
     return res.render('register', { styles:'styles.css'});
 });
 
@@ -33,10 +38,10 @@ viewsRouter.get('/chat', (req, res) => {
     return res.render('chat', { styles:'styles.css'});
 });
 
-viewsRouter.get('/products', async (req, res) => {
+viewsRouter.get('/products', auth,  async (req, res) => {
     const products = await getProducts(req, res);
     console.log(products);
-    return res.render('products', { products, styles:'styles.css'});
+    return res.render('products', { user: req.session.user, products, styles:'styles.css'});
 });
 
 viewsRouter.get('/carts/:cid', async (req, res) => {
