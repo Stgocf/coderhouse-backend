@@ -47,3 +47,4 @@ sessionRouter.get('/github/callback', passport.authenticate('github', { failureR
 );
 
 export default sessionRouter;
+
