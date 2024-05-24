@@ -39,10 +39,14 @@ sessionRouter.get('/github', passport.authenticate('github'), (req, res) => {
     }
 );
 
-sessionRouter.get('/github/callback', passport.authenticate('github', { failureRedirect: '/api/sessions/error', 
-                                                                        successRedirect: '/profile'}),
+sessionRouter.get('/github/callback', passport.authenticate('github', { failureRedirect: '/api/sessions/error'}),
     (req, res) => {
-        res.status(200).json({ payload: req.user});
+        // Create the session
+        let user = { ...req.user._doc };
+        delete user.password;
+        req.session.user = user;
+        console.log('GitHub authentication successful, session created:', req.session.user);
+        res.redirect('/profile');
     }
 );
 
