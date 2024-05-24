@@ -40,7 +40,6 @@ viewsRouter.get('/chat', (req, res) => {
 
 viewsRouter.get('/products', auth,  async (req, res) => {
     const products = await getProducts(req, res);
-    console.log(products);
     return res.render('products', { user: req.session.user, products, styles:'styles.css'});
 });
 

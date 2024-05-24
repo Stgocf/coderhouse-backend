@@ -1,5 +1,7 @@
 import { request, response } from "express";
 import { userModel } from "../models/users.js";
+//import hash functions from utils 
+import { hashPassword, comparePassword } from '../utils.js'
 
 //const userModel = new userModel()
 
@@ -31,8 +33,12 @@ export const login = async (req = request, res = response) => {
             return res.status(400).json({ msg: 'Email and password are required' });
         }
 
-        const user = await userModel.findOne({ email, password }).lean();
+        const user = await userModel.findOne({ email}).lean();
         if (user) {
+            const passwordMatch = await comparePassword(password, user.password);
+            if (!passwordMatch) {
+                return res.status(400).json({ msg: 'Invalid password' });
+            }
             req.session.user = user;
             console.log(`Session created for user ${req.session.user.first_name} ${req.session.user.last_name}`);
             res.status(200).json({ msg: 'Login OK' });
@@ -76,8 +82,20 @@ export const register = async (req = request, res = response) => {
         if (email === 'adminCoder@coder.com' && password === 'adminCod3r123'){
             role = 'admin';
         }
+
+        //hash the password
+        const hashedPassword = await hashPassword(password);
+        const passwordH = hashedPassword;
         
-        const user = await userModel.create({first_name, last_name, email, age, password, role});
+        const user = await userModel.create({
+            first_name, 
+            last_name, 
+            email, 
+            age, 
+            password:passwordH, 
+            role
+        });
+
         res.status(200).send({ msg: 'User created!'});
     }catch (error){
         console.error(error);
@@ -86,3 +104,5 @@ export const register = async (req = request, res = response) => {
 
 
 }
+ 
+

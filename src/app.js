@@ -21,6 +21,9 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import { dbUri } from './database/config.js';
 
+import passport from 'passport';
+import { passportConfig } from './passport/passport.js';
+
 //create a new instance of ProductManager
 const prodM = new ProductManager();
 
@@ -57,6 +60,11 @@ app.use(session({
     resave:true,
     saveUninitialized:true
 }))
+
+//use passport as middleware
+passportConfig();
+app.use(passport.initialize());
+app.use(passport.session());
 
 //use productsRouter on /api/products
 app.use('/api/products', productsRouter);
