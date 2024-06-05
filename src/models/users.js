@@ -10,6 +10,8 @@ const userSchema = new Schema({
             age: { type:Number},
             password: { type:String, required:[true, 'password is required']},
             role: { type:String, default: 'user'},
+            //cart that reference a cart on mongoo
+            cart: { type: Schema.Types.ObjectId, ref: 'cart' },
         
 }
 );

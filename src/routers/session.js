@@ -9,6 +9,16 @@ sessionRouter.get('/error', (req, res) => {
     res.status(401).json({ msg: 'Error!!' });
 });
 
+sessionRouter.get('/current', auth, (req, res) => {
+    //if session.user exist, return the user. If not return a object with a message
+    if (req.session.user) {
+        res.status(200).json(req.session.user);
+    } else {
+        res.status(401).json({ msg: 'No user is logged' });
+    }
+}
+);
+
 //sessionRouter.post('/login', login);
 sessionRouter.post('/login', passport.authenticate('login'), (req, res) => {
         //if passport auth is OK, create a session
