@@ -10,7 +10,7 @@ import cookieRouter from './routers/cookie.js';
 import sessionRouter from './routers/session.js'
 import __dirname from './utils.js';
 
-import  ProductManager  from './productManager.js';
+//import  ProductManager  from './productManager.js';
 import { dbConnection } from './database/config.js';
 
 import { productModel } from "./models/products.js";
@@ -19,19 +19,21 @@ import { messageModel } from "./models/messages.js";
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import { dbUri } from './database/config.js';
 
 import passport from 'passport';
 import { passportConfig } from './passport/passport.js';
 
+import { myconfig } from './config.js';
+console.log(myconfig);
+
 //create a new instance of ProductManager
-const prodM = new ProductManager();
+//const prodM = new ProductManager();
 
 //print __dirname to check the path
 console.log(__dirname)
 
 //define PORT 
-const PORT = 8080;
+const PORT = myconfig.PORT;
 // Create an express app
 const app = express();
 
@@ -53,10 +55,10 @@ app.use(cookieParser("password"));
 //use session as midleware
 app.use(session({
     store: MongoStore.create({ 
-        mongoUrl: dbUri,
+        mongoUrl: myconfig.MONGODBURI,
         ttl: 10 * 60 // = 10 minutos. Después de 10 minutos la sesión expira
     }),
-    secret:"secretCoderSCF",
+    secret:myconfig.MONGODBSECRET,
     resave:true,
     saveUninitialized:true
 }))
